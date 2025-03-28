@@ -1,4 +1,4 @@
-sqlite3
+sqlite3=3.37.2
 python3-pip
 python3-dev
 build-essential

@@ -5,6 +5,13 @@ import tempfile
 from PIL import Image
 from dotenv import load_dotenv
 import google.generativeai as genai
+
+# Fix SQLite version issues
+import sys
+import sqlite3
+__import__('pysqlite3')
+sys.modules['sqlite3'] = sys.modules.pop('pysqlite3')
+
 import chromadb
 from langchain_google_genai import GoogleGenerativeAIEmbeddings
 from langchain.text_splitter import RecursiveCharacterTextSplitter
