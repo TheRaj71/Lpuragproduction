@@ -1,5 +1,6 @@
-sqlite3=3.37.2
+software-properties-common
 python3-pip
 python3-dev
 build-essential
 python3-venv
+libsqlite3-dev
