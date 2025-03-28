@@ -1,52 +1,64 @@
-# Domain-Specific RAG Chatbot
+# LPU RAG Chatbot
 
-A Retrieval-Augmented Generation (RAG) chatbot that allows you to create specialized knowledge domains from PDF documents and chat with an AI assistant that answers questions based on that knowledge.
+A Retrieval-Augmented Generation (RAG) chatbot for LPU college that allows secure document management and interactive Q&A.
 
 ## Features
 
-- Create multiple knowledge domains
-- Upload and process PDF documents for each domain
-- Chat with an AI assistant that answers questions based on the domain knowledge
-- RAG implementation with Google's Gemini API and ChromaDB for vector storage
+- Secure admin interface (accessed via `/?admin=true`)
+- Support for multiple document types (PDF, Markdown, JSON)
+- Batch folder processing
+- Clean user chat interface
+- Built with Streamlit and ChromaDB
 
-## Setup
+## Setup in Streamlit Cloud
 
-1. Clone this repository
-2. Install the required dependencies:
+1. Fork this repository
+2. Set up Streamlit deployment
+3. Configure the following environment variables:
    ```
+   GOOGLE_API_KEY=your_gemini_api_key_here
+   ```
+
+4. Add the following secrets in Streamlit settings:
+   ```
+   # Get an API key from: https://makersuite.google.com/
+   GOOGLE_API_KEY=your_gemini_api_key_here
+   ```
+
+## Admin Access
+
+1. Access admin panel: `your-app-url/?admin=true`
+2. Login credentials:
+   - Username: `admin`
+   - Password: `admin123`
+
+## File Support
+
+The chatbot can process:
+- PDF documents
+- Markdown files (.md)
+- JSON files
+
+## Local Development
+
+1. Clone the repository
+2. Install dependencies:
+   ```bash
    pip install -r requirements.txt
    ```
-3. Create a `.env` file in the root directory with the following variables:
-   ```
-   GOOGLE_API_KEY=your_google_api_key_here
-   DOMAIN_CONFIG_PATH=./data/domain_config.json
-   UPLOAD_FOLDER=./data/uploads
-   ```
-4. Get a Google API key for Gemini from [Google AI Studio](https://makersuite.google.com/)
-
-## Usage
-
-1. Run the application:
-   ```
+3. Create a `.env` file with your API keys
+4. Run the app:
+   ```bash
    streamlit run app.py
    ```
-2. In the sidebar, use the "Admin: Manage Domains" section to:
-   - Create a new knowledge domain
-   - Upload PDF documents to a domain
-3. Select a domain to chat with from the "Select Domain for Chat" section
-4. Start asking questions in the chat interface
 
-## How it Works
+## Important Files for Deployment
 
-1. PDF documents are processed and split into chunks
-2. Each chunk is embedded using Google's embedding model
-3. Embeddings are stored in ChromaDB collections (one per domain)
-4. When you ask a question, the system:
-   - Embeds your question
-   - Retrieves the most relevant chunks from the domain's collection
-   - Sends the question and relevant context to Gemini to generate a response
+- `packages.txt`: System dependencies for Streamlit Cloud
+- `requirements.txt`: Python package dependencies
+- `.streamlit/config.toml`: Streamlit configuration
+- `app.py`: Main application code
 
-## Requirements
+## Note
 
-- Python 3.8+
-- See requirements.txt for all dependencies
+Make sure to keep your admin credentials secure and change them in production. The admin interface is hidden from regular users and only accessible through the direct URL parameter.

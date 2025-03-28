@@ -2,6 +2,7 @@ streamlit
 python-dotenv
 google-generativeai
 chromadb
+pysqlite3-binary
 pyPDF2
 langchain
 langchain-google-genai
