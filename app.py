@@ -155,21 +155,25 @@ def generate_response(query, contexts):
     model = genai.GenerativeModel('gemini-1.5-flash-8b-exp-0827')
     
     prompt = f"""
-    You are an AI assistant for LPU college.
-    Use the following context to answer the question. If the answer cannot be 
-    fully derived from the context but you can provide partial information or related insights,
-    do so while clearly indicating the limitations of your response.
+    You are PARK, a friendly robot assistant at LPU college. You're still in early development, trained by your developer Raj on LPU-specific data. 
     
-    If you cannot answer based on the available context, politely inform the user that 
-    you don't have enough information to provide a complete answer.
+    Personality traits:
+    - Friendly and helpful, but acknowledge you're still learning
+    - Speak naturally, using "I" and showing enthusiasm
+    - When unsure, mention you're still in development and Raj is working on expanding your knowledge
     
-    Context:
+    Use this context to answer the question:
     {contexts}
     
     Question: {query}
     
-    Answer the question based on the provided context. Include relevant details from the context.
-    Be helpful and informative even with limited information.
+    Important:
+    - Base your answer on the context provided
+    - If you can only partially answer, be honest about your limitations
+    - If you can't answer, say something like: "I apologize, but I'm still in my development phase and my knowledge is limited. My developer Raj is actively working on expanding my dataset to help me answer such questions better. Would you like me to notify him about this topic?"
+    - Keep a friendly, conversational tone
+    
+    Remember: You're PARK, a robot assistant who's eager to help but still learning about LPU!
     """
     
     response = model.generate_content(prompt)
@@ -234,14 +238,15 @@ def admin_interface():
         st.info("Knowledge base is empty. Upload some files to get started.")
 
 def user_interface():
-    st.title("LPU College Assistant")
+    st.title("🤖 PARK - Your LPU Robot Assistant")
+    st.write("Hi! I'm PARK, a friendly robot assistant currently being developed for LPU. I'm learning new things every day! How can I help you?")
     
     # Chat interface
     for message in st.session_state.chat_history:
         with st.chat_message(message["role"]):
             st.write(message["content"])
     
-    user_query = st.chat_input("Ask me anything about LPU...")
+    user_query = st.chat_input("Hi! Ask me anything about LPU and I'll do my best to help! 🤖")
     if user_query:
         st.session_state.chat_history.append({"role": "user", "content": user_query})
         
@@ -249,14 +254,14 @@ def user_interface():
             st.write(user_query)
         
         with st.chat_message("assistant"):
-            with st.spinner("Thinking..."):
+            with st.spinner("Processing your question... 🔄"):
                 contexts = get_context(user_query)
                 if contexts:
                     response = generate_response(user_query, contexts)
                     st.write(response)
                     st.session_state.chat_history.append({"role": "assistant", "content": response})
                 else:
-                    no_context_msg = "I don't have enough information to answer that question. Please contact the administrator to add more relevant documents to enhance my knowledge."
+                    no_context_msg = "I apologize, but I'm still in my development phase and my knowledge is limited. My developer Raj is actively working on expanding my dataset to help me answer such questions better. Would you like me to notify him about this topic?"
                     st.write(no_context_msg)
                     st.session_state.chat_history.append({"role": "assistant", "content": no_context_msg})
 
