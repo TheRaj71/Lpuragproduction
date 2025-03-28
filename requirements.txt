@@ -1,0 +1,11 @@
+streamlit
+python-dotenv
+google-generativeai
+chromadb
+pyPDF2
+langchain
+langchain-google-genai
+pandas
+pillow
+watchdog
+markdown
