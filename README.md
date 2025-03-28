@@ -41,13 +41,31 @@ The chatbot can process:
 
 ## Local Development
 
+### Linux Setup
+If you're on Linux, you can use the provided setup script:
+```bash
+chmod +x linux_setup.sh
+./linux_setup.sh
+```
+This will:
+- Increase inotify watch limit
+- Install system dependencies
+- Set up virtual environment
+- Install Python packages
+
+### Manual Setup
 1. Clone the repository
-2. Install dependencies:
+2. If on Linux, increase inotify watch limit:
+   ```bash
+   echo "fs.inotify.max_user_watches=524288" | sudo tee -a /etc/sysctl.conf
+   sudo sysctl -p
+   ```
+3. Install dependencies:
    ```bash
    pip install -r requirements.txt
    ```
-3. Create a `.env` file with your API keys
-4. Run the app:
+4. Create a `.env` file with your API keys
+5. Run the app:
    ```bash
    streamlit run app.py
    ```
